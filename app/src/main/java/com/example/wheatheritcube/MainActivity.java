@@ -7,11 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private boolean binded=false;
     private ServiceWeather serviceWeather;
+
     ServiceConnection weatherServiceconnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+        watchMileage();
     }
 
     @Override
@@ -47,5 +50,20 @@ public class MainActivity extends AppCompatActivity {
             unbindService(weatherServiceconnection);
             binded=false;
         }
+    }
+    private void watchMileage()
+    {
+        final TextView textView=findViewById(R.id.distance);;
+        Handler handler=new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                double distanse=0.0;
+                if(serviceWeather!=null) distanse=serviceWeather.getMiles();
+                textView.setText("Steps:"+distanse);
+                handler.postDelayed(this,1000);
+            }
+
+        });
     }
 }
