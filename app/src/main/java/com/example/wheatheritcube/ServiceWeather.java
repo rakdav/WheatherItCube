@@ -1,6 +1,7 @@
 package com.example.wheatheritcube;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
+
 public class ServiceWeather extends Service {
+
     private static String LOG_TAG = "WheatherService";
     private final IBinder binder = new LocalWheatherBinder();
     private double distanceInMeters;
@@ -59,20 +63,18 @@ public class ServiceWeather extends Service {
         };
         LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-
-        int permissionSt = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            int accessFinePermisson = ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION);
+            int accessCoarsePermisson = ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION);
+            MainActivity.getAccessFinePermisions();
+            MainActivity.getAccessCoarsePermisions();
             return;
         }
         locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, listener);
     }
+
 
     public double getMiles(){
         return this.distanceInMeters;
