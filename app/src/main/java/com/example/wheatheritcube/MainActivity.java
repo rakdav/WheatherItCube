@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent=new Intent(this,ServiceWeather.class);
+        Intent intent=new Intent(MainActivity.this,ServiceWeather.class);
         bindService(intent,weatherServiceconnection, Context.BIND_AUTO_CREATE);
+        Log.d("serv",Boolean.toString(binded));
     }
 
     @Override
