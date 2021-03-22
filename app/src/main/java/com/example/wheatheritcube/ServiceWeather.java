@@ -15,9 +15,6 @@ import android.os.IBinder;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import static androidx.core.app.ActivityCompat.requestPermissions;
 
 public class ServiceWeather extends Service {
 
