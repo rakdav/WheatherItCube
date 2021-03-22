@@ -1,7 +1,9 @@
 package com.example.wheatheritcube;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         Intent intent=new Intent(MainActivity.this,ServiceWeather.class);
         bindService(intent,weatherServiceconnection, Context.BIND_AUTO_CREATE);
         Log.d("serv",Boolean.toString(binded));

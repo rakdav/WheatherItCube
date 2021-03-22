@@ -14,6 +14,7 @@ import android.os.IBinder;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class ServiceWeather extends Service {
     private static String LOG_TAG = "WheatherService";
@@ -59,6 +60,7 @@ public class ServiceWeather extends Service {
         LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 
+        int permissionSt = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
