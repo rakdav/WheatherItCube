@@ -61,13 +61,7 @@ public class ServiceWeather extends Service {
         LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            int accessFinePermisson = ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION);
-            int accessCoarsePermisson = ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION);
-            MainActivity.getAccessFinePermisions();
-            MainActivity.getAccessCoarsePermisions();
-            return;
+           return;
         }
         locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, listener);
     }
@@ -77,7 +71,8 @@ public class ServiceWeather extends Service {
         return this.distanceInMeters;
     }
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind(Intent intent)
+    {
         return this.binder;
     }
 

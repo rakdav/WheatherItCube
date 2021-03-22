@@ -1,5 +1,6 @@
 package com.example.wheatheritcube;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -53,7 +54,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int accessFinePermisson = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        int accessCoarsePermisson = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+        getAccessFinePermisions();
+        getAccessCoarsePermisions();
+
         Intent intent=new Intent(MainActivity.this,ServiceWeather.class);
         bindService(intent,weatherServiceconnection, Context.BIND_AUTO_CREATE);
         Log.d("serv",Boolean.toString(binded));
@@ -84,11 +91,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 double distanse=0.0;
-                if(serviceWeather!=null) distanse=serviceWeather.getMiles();
+                if(serviceWeather!=null) distanse=serviceWeather.getMiles()/1000;
                 textView.setText("Steps:"+distanse);
                 handler.postDelayed(this,1000);
             }
 
         });
     }
+
+
 }
