@@ -54,13 +54,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //Подключение разрещений
         int accessFinePermisson = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         int accessCoarsePermisson = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
-        getAccessFinePermisions();
-        getAccessCoarsePermisions();
-
+        ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSION_REQUEST_CODE_FINE);
+        ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},MY_PERMISSION_REQUEST_COARSE_FINE);
+        //
         Intent intent=new Intent(MainActivity.this,ServiceWeather.class);
         bindService(intent,weatherServiceconnection, Context.BIND_AUTO_CREATE);
         Log.d("serv",Boolean.toString(binded));
@@ -75,10 +76,7 @@ public class MainActivity extends AppCompatActivity {
             binded=false;
         }
     }
-    public static void getAccessFinePermisions()
-    {
-        ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSION_REQUEST_CODE_FINE);
-    }
+
     public static void getAccessCoarsePermisions()
     {
         ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},MY_PERMISSION_REQUEST_COARSE_FINE);
